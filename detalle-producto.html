@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Producto - Inventory</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/ecommerce.css">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <style>
+    .detalle-contenedor {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .detalle-imagen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--gris-claro);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 400px;
+    }
+
+    .detalle-imagen img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .detalle-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .detalle-categoria {
+      display: inline-block;
+      background-color: var(--azul-claro);
+      color: var(--azul-oscuro);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      width: fit-content;
+      margin-bottom: 1rem;
+    }
+
+    .detalle-nombre {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--azul-oscuro);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .detalle-descripcion {
+      font-size: 1rem;
+      color: var(--gris-oscuro);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .detalle-precio {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--exito);
+      margin-bottom: 0.5rem;
+    }
+
+    .detalle-stock {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background-color: var(--gris-claro);
+      border-left: 4px solid var(--azul-claro);
+      border-radius: 8px;
+    }
+
+    .detalle-stock label {
+      font-weight: 600;
+      color: var(--azul-oscuro);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .detalle-stock-disponible {
+      font-size: 1.1rem;
+      color: var(--gris-oscuro);
+    }
+
+    .detalle-stock-disponible.bajo {
+      color: var(--alerta);
+      font-weight: 600;
+    }
+
+    .detalle-stock-disponible.sin {
+      color: var(--error);
+      font-weight: 600;
+    }
+
+    .detalle-acciones {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .detalle-cantidad {
+      display: flex;
+      align-items: center;
+      border: 2px solid var(--azul-claro);
+      border-radius: 8px;
+      overflow: hidden;
+      width: fit-content;
+    }
+
+    .detalle-cantidad button {
+      background-color: var(--azul-claro);
+      color: var(--azul-oscuro);
+      border: none;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .detalle-cantidad button:hover {
+      background-color: var(--azul-oscuro);
+      color: var(--blanco);
+    }
+
+    .detalle-cantidad input {
+      width: 60px;
+      text-align: center;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .detalle-agregar {
+      flex: 1;
+    }
+
+    .detalle-agregar.deshabilitado {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .detalle-agregar.deshabilitado button {
+      cursor: not-allowed;
+    }
+
+    .seccion-relacionados {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--gris-claro);
+    }
+
+    .seccion-relacionados h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--azul-oscuro);
+    }
+
+    .productos-grid-relacionados {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tarjeta-producto-mini {
+      background-color: var(--blanco);
+      border: 1px solid var(--gris-claro);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .tarjeta-producto-mini:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .tarjeta-producto-mini-imagen {
+      width: 100%;
+      height: 150px;
+      background-color: var(--gris-claro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .tarjeta-producto-mini-imagen img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .tarjeta-producto-mini-info {
+      padding: 1rem;
+    }
+
+    .tarjeta-producto-mini-nombre {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      color: var(--azul-oscuro);
+      text-align: center;
+    }
+
+    .tarjeta-producto-mini-precio {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--exito);
+      text-align: center;
+    }
+
+    .volver-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--azul-claro);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      transition: gap 0.3s ease;
+    }
+
+    .volver-link:hover {
+      gap: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+      .detalle-contenedor {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .detalle-nombre {
+        font-size: 1.8rem;
+      }
+
+      .detalle-precio {
+        font-size: 1.8rem;
+      }
+
+      .detalle-acciones {
+        flex-direction: column;
+      }
+
+      .detalle-agregar {
+        width: 100%;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="contenedor">
+      <div class="encabezado-contenedor">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer;">
+          <img src="../assets/logo.svg" alt="Logo Inventory">
+          <span class="logo-text">Inventory</span>
+        </div>
+        <div class="barra-busqueda-contenedor">
+          <div class="barra-busqueda">
+            <svg class="icono-buscar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" id="buscar" placeholder="Buscar producto..." class="input-buscar">
+            <button class="btn-limpiar-buscar" onclick="document.getElementById('buscar').value='';" style="display:none;">✕</button>
+          </div>
+        </div>
+        <div class="menu-superior">
+          <div class="icono-carrito" id="btn-carrito" title="Mi carrito">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="contador-carrito" id="contador">0</span>
+          </div>
+          <div id="menu-usuario">
+            <button class="btn btn-principal" onclick="window.location.href='login.html'" title="Iniciar sesión">👤</button>
+          </div>
+          <button class="btn-icono" onclick="window.location.href='index.html'" title="Volver al catálogo">⏠</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <div class="detalle-contenedor">
+      <div class="detalle-imagen">
+        <img id="imagen-producto" src="../assets/product-placeholder.svg" alt="Producto">
+      </div>
+
+      <div class="detalle-info">
+        <span class="detalle-categoria" id="categoria-producto">Categoría</span>
+        
+        <h1 class="detalle-nombre" id="nombre-producto">Nombre del Producto</h1>
+        
+        <p class="detalle-descripcion" id="descripcion-producto">
+          Descripción del producto...
+        </p>
+
+        <div class="detalle-precio" id="precio-producto">$0</div>
+
+        <div class="detalle-stock">
+          <label>Disponibilidad en Stock:</label>
+          <div class="detalle-stock-disponible" id="stock-producto">
+            0 unidades disponibles
+          </div>
+        </div>
+
+        <div class="detalle-acciones" id="acciones-contenedor">
+          <div class="detalle-cantidad">
+            <button onclick="disminuirCantidad()">−</button>
+            <input type="number" id="cantidad-detalle" value="1" min="1" max="100" readonly>
+            <button onclick="aumentarCantidad()">+</button>
+          </div>
+          <div class="detalle-agregar" id="agregar-contenedor">
+            <button class="btn btn-principal" style="width: 100%; font-size: 1.1rem; padding: 1rem;" onclick="agregarAlCarritoDetalle()">
+              🛒 Agregar al Carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seccion-relacionados" id="seccion-relacionados" style="display: none;">
+      <h3>Productos Relacionados</h3>
+      <div class="productos-grid-relacionados" id="productos-relacionados">
+        <!-- Se cargarán aquí -->
+      </div>
+    </div>
+  </main>
+
+  <div class="carrito-panel" id="carrito-panel">
+    <div class="carrito-encabezado">
+      <h3 style="color: var(--blanco); margin: 0;">Mi Carrito</h3>
+      <button class="carrito-cerrar" id="cerrar-carrito">✕</button>
+    </div>
+    <div class="carrito-contenido" id="carrito-contenido">
+      <div class="carrito-vacio"><p>Tu carrito está vacío</p></div>
+    </div>
+    <div class="carrito-pie">
+      <div class="carrito-total">
+        <span>Total:</span>
+        <span id="total-carrito">$0.00</span>
+      </div>
+      <button class="btn btn-principal" id="finalizar-pedido" disabled>Finalizar Pedido</button>
+    </div>
+  </div>
+
+  <!-- <script src="../js/carrito.js"></script> -->
+  <script>
+    window.BACKEND_URL = 'http://localhost:3000';
+  </script>
+  <script src="../js/app.js"></script>
+  <script src="../js/detalle-producto.js"></script>
+</body>
+</html>

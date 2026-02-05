@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory - E-Commerce</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/ecommerce.css">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <!-- ENCABEZADO -->
+  <header>
+    <div class="contenedor">
+      <div class="encabezado-contenedor">
+        <!-- LOGO -->
+        <div class="logo">
+          <img src="../assets/logo.svg" alt="Logo Inventory" class="logo-img">
+          <span class="logo-text">Inventory</span>
+        </div>
+
+        <!-- BARRA DE BÚSQUEDA MODERNA -->
+        <div class="barra-busqueda-contenedor">
+          <div class="barra-busqueda">
+            <svg class="icono-buscar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" id="buscar" placeholder="Buscar producto..." class="input-buscar">
+            <button class="btn-limpiar-buscar" onclick="document.getElementById('buscar').value=''; configurarEventos();" style="display:none;">✕</button>
+          </div>
+          <span id="msg-buscar" class="mensaje mensaje-error"></span>
+        </div>
+
+        <!-- MENU SUPERIOR -->
+        <div class="menu-superior">
+          <!-- CARRITO -->
+          <div class="icono-carrito" id="btn-carrito" title="Mi carrito">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="contador-carrito" id="contador">0</span>
+          </div>
+
+          <!-- USUARIO -->
+          <div id="menu-usuario">
+            <button class="btn btn-principal" onclick="window.location.href='login.html'" title="Iniciar sesión">👤</button>
+          </div>
+
+          <!-- SEGUIMIENTO -->
+          <a href="seguimiento-pedidos.html" class="btn-icono" title="Ver mis pedidos">
+            <span>📦</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div class="categorias">
+      <div class="contenedor">
+        <button class="btn-categorias-hamburguesa" id="btn-categorias-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="categorias-lista" id="categorias-lista">
+          <a href="#" class="categoria activo" data-categoria="todos">
+            <span class="icono-categoria">📦</span>
+            <span>Todos</span>
+          </a>
+          <a href="#" class="categoria" data-categoria="bebidas">
+            <span class="icono-categoria">🍹</span>
+            <span>Bebidas</span>
+          </a>
+          <a href="#" class="categoria" data-categoria="snacks">
+            <span class="icono-categoria">🍿</span>
+            <span>Snacks</span>
+          </a>
+          <a href="#" class="categoria" data-categoria="limpieza">
+            <span class="icono-categoria">🧹</span>
+            <span>Limpieza</span>
+          </a>
+          <a href="#" class="categoria" data-categoria="higiene">
+            <span class="icono-categoria">🧼</span>
+            <span>Higiene</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="contenedor">
+    <!-- BANNER PROMOCIONAL -->
+    <section class="banner">
+      <h2>¡Descuentos Especiales!</h2>
+      <p>Obtén hasta 40% de descuento en productos seleccionados</p>
+      <button class="btn btn-secundario">Ver ofertas</button>
+    </section>
+
+    <!-- GRID DE PRODUCTOS -->
+    <section>
+      <h2>Catálogo de Productos</h2>
+      <div class="productos-grid" id="productos-grid">
+        <!-- Los productos se cargarán aquí con JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- CARRITO LATERAL -->
+  <div class="carrito-panel" id="carrito-panel">
+    <div class="carrito-encabezado">
+      <h3 style="color: var(--blanco); margin: 0;">Mi Carrito</h3>
+      <button class="carrito-cerrar" id="cerrar-carrito">✕</button>
+    </div>
+
+    <div class="carrito-contenido" id="carrito-contenido">
+      <div class="carrito-vacio">
+        <p>Tu carrito está vacío</p>
+      </div>
+    </div>
+
+    <div class="carrito-pie">
+      <div class="carrito-total">
+        <span>Total:</span>
+        <span id="total-carrito">$0.00</span>
+      </div>
+      <button class="btn btn-principal" id="finalizar-pedido" disabled>Finalizar Pedido</button>
+    </div>
+  </div>
+
+  <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+  <a href="https://wa.me/573155508228" target="_blank" class="boton-whatsapp" title="Chatea con nosotros en WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.255.949c-1.238.503-2.37 1.236-3.356 2.157a9.797 9.797 0 00-1.988 3.233A9.822 9.822 0 001.02 19.5a9.823 9.823 0 003.746 1.973 9.799 9.799 0 004.088.655h.004a9.822 9.822 0 004.172-.88 9.779 9.779 0 003.044-2.147A9.8 9.8 0 0021.978 15.29a9.823 9.823 0 00.655-4.088 9.768 9.768 0 00-.88-4.172 9.783 9.783 0 00-2.147-3.044 9.8 9.8 0 00-3.234-1.988 9.822 9.822 0 00-4.173-.654zm0 0" />
+    </svg>
+    <span class="tooltip-whatsapp">Chatea con nosotros</span>
+  </a>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <div class="contenedor">
+      <div class="footer-contenido">
+        <div class="footer-seccion">
+          <h3>Sobre Nosotros</h3>
+          <p>Inventory es tu distribuidora de confianza para productos de hogar y abarrotes de la mejor calidad.</p>
+          <div class="redes-sociales">
+            <a href="#" title="Facebook">f</a>
+            <a href="#" title="Instagram">📷</a>
+            <a href="#" title="Twitter">𝕏</a>
+            <a href="https://wa.me/573155508228" target="_blank" title="WhatsApp">💬</a>
+          </div>
+        </div>
+
+        <div class="footer-seccion">
+          <h3>Información</h3>
+          <a href="#">Preguntas Frecuentes</a>
+          <a href="#">Política de Privacidad</a>
+          <a href="#">Términos y Condiciones</a>
+          <a href="#">Contacto</a>
+        </div>
+
+        <div class="footer-seccion">
+          <h3>Contacto</h3>
+          <p>📍 Carrera 64 b # 40-33</p>
+          <p>📍 Barrio El Porvenir, Primera etapa (Al lado del supermercado Distrimar)</p>
+          <p>📞 +57 315 5508228</p>
+          <p>⏰ Lun - Vie: 8am - 6pm</p>
+          <p><a href="https://wa.me/573155508228" target="_blank" style="color: rgba(255, 255, 255, 0.85); font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.color='#B6E1F2'" onmouseout="this.style.color='rgba(255, 255, 255, 0.85)'">💬 Chatea con nosotros en WhatsApp</a></p>
+        </div>
+
+        <div class="footer-seccion">
+          <h3>Métodos de Pago</h3>
+          <p>💳 Tarjeta de Crédito/Débito</p>
+          <p>🏦 Transferencia Bancaria</p>
+          <p>💰 Efectivo Contra Entrega</p>
+          <p>📱 Billetera Digital</p>
+        </div>
+      </div>
+
+      <div class="footer-separador">
+        <p>&copy; 2026 Inventory. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    window.BACKEND_URL = 'http://localhost:3000';
+  </script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

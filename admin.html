@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrador - Inventory</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="admin-contenedor">
+    <!-- MENÚ LATERAL -->
+    <aside class="menu-lateral">
+      <div class="menu-lateral-logo">
+        <img src="../assets/logo.svg" alt="Logo">
+        <span>Inventory</span>
+      </div>
+
+      <ul class="menu-lateral-lista">
+        <li class="menu-lateral-item">
+          <a href="#" class="menu-lateral-enlace activo" data-seccion="dashboard">
+            <span class="menu-lateral-icono">📊</span>
+            <span>Inicio</span>
+          </a>
+        </li>
+        <li class="menu-lateral-item">
+          <a href="#" class="menu-lateral-enlace" data-seccion="productos">
+            <span class="menu-lateral-icono">📦</span>
+            <span>Productos</span>
+          </a>
+        </li>
+        <li class="menu-lateral-item">
+          <a href="#" class="menu-lateral-enlace" data-seccion="categorias">
+            <span class="menu-lateral-icono">🏷️</span>
+            <span>Categorías</span>
+          </a>
+        </li>
+        <li class="menu-lateral-item">
+          <a href="#" class="menu-lateral-enlace" data-seccion="pedidos">
+            <span class="menu-lateral-icono">🚚</span>
+            <span>Pedidos</span>
+          </a>
+        </li>
+        <li class="menu-lateral-item">
+          <a href="#" class="menu-lateral-enlace" data-seccion="usuarios">
+            <span class="menu-lateral-icono">👥</span>
+            <span>Usuarios</span>
+          </a>
+        </li>
+        <li class="menu-lateral-item">
+          <a href="#" class="menu-lateral-enlace" data-seccion="reportes">
+            <span class="menu-lateral-icono">📈</span>
+            <span>Reportes</span>
+          </a>
+        </li>
+        <li class="menu-lateral-item">
+          <a href="#" class="menu-lateral-enlace" data-seccion="configuracion">
+            <span class="menu-lateral-icono">⚙️</span>
+            <span>Configuración</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="menu-cerrar-sesion">
+        <button onclick="cerrarSesionAdmin()">Cerrar Sesión</button>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="contenido-principal">
+      <!-- BARRA SUPERIOR -->
+      <header class="barra-superior">
+        <div class="barra-titulo">
+          <h1 id="titulo-seccion">Dashboard</h1>
+        </div>
+
+        <div class="barra-acciones">
+          <div class="usuario-info">
+            <span>🔔</span>
+          </div>
+          <div class="usuario-info">
+            <span id="nombre-usuario">Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ÁREA DE CONTENIDO -->
+      <div class="area-contenido">
+        <!-- DASHBOARD -->
+        <section id="seccion-dashboard" class="seccion-contenido activa">
+          <div class="dashboard-stats">
+            <div class="stat-tarjeta">
+              <div class="stat-icono">📊</div>
+              <div class="stat-valor" id="total-ventas">$0.00</div>
+              <div class="stat-etiqueta">Total de Ventas</div>
+            </div>
+
+            <div class="stat-tarjeta">
+              <div class="stat-icono">📦</div>
+              <div class="stat-valor" id="total-productos">0</div>
+              <div class="stat-etiqueta">Productos</div>
+            </div>
+
+            <div class="stat-tarjeta">
+              <div class="stat-icono">🚚</div>
+              <div class="stat-valor" id="pedidos-pendientes">0</div>
+              <div class="stat-etiqueta">Pedidos Pendientes</div>
+            </div>
+
+            <div class="stat-tarjeta">
+              <div class="stat-icono">👥</div>
+              <div class="stat-valor" id="total-clientes">0</div>
+              <div class="stat-etiqueta">Clientes Registrados</div>
+            </div>
+
+            <div class="stat-tarjeta" id="stat-en-preparacion">
+              <div class="stat-icono">⚙️</div>
+              <div class="stat-valor">0</div>
+              <div class="stat-etiqueta">En Preparación</div>
+            </div>
+
+            <div class="stat-tarjeta" id="stat-entregados">
+              <div class="stat-icono">✅</div>
+              <div class="stat-valor">0</div>
+              <div class="stat-etiqueta">Entregados</div>
+            </div>
+
+            <div class="stat-tarjeta" id="stat-sin-stock">
+              <div class="stat-icono">⚠️</div>
+              <div class="stat-valor">0</div>
+              <div class="stat-etiqueta">Sin Stock</div>
+            </div>
+          </div>
+
+          <div class="graficos-container">
+            <div class="grafico-card">
+              <h3>Productos Más Vendidos</h3>
+              <canvas id="grafico-ventas"></canvas>
+            </div>
+
+            <div class="grafico-card">
+              <h3>Nivel de Inventario</h3>
+              <canvas id="grafico-inventario"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- PRODUCTOS -->
+        <section id="seccion-productos" class="seccion-contenido" style="display: none;">
+          <div class="tabla-contenedor">
+            <div class="tabla-encabezado">
+              <h2>Gestión de Productos</h2>
+              <div class="tabla-acciones">
+                <button class="btn btn-principal" onclick="abrirModalProducto()">+ Agregar Producto</button>
+              </div>
+            </div>
+
+            <div id="contenedor-tabla-productos">
+              <table class="admin-tabla">
+                <thead>
+                  <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-productos-body">
+                  <!-- Se llenará con JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PEDIDOS -->
+        <section id="seccion-pedidos" class="seccion-contenido" style="display: none;">
+          <div class="tabla-contenedor">
+            <div class="tabla-encabezado">
+              <h2>Gestión de Pedidos</h2>
+              <div class="tabla-acciones">
+                <input type="text" id="filtro-pedidos" placeholder="🔍 Buscar radicado, cliente..." class="campo-busqueda">
+              </div>
+            </div>
+            <div id="pedidosLista" style="overflow-x: auto;">
+              <table class="admin-tabla pedidos-tabla">
+                <thead>
+                  <tr>
+                    <th>Radicado</th>
+                    <th>Cliente</th>
+                    <th>Teléfono</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-pedidos-body">
+                  <tr><td colspan="8" class="sin-datos">Cargando pedidos...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- MODAL DETALLE PEDIDO -->
+          <div id="modal-detalle-pedido" class="modal" style="display: none;">
+            <div class="modal-contenido modal-grande">
+              <div class="modal-encabezado">
+                <h2>Detalle del Pedido</h2>
+                <button class="cerrar-modal" onclick="cerrarModalDetallePedido()">&times;</button>
+              </div>
+              <div id="contenido-detalle-pedido"></div>
+              <div class="modal-acciones">
+                <button class="btn btn-secundario" onclick="cerrarModalDetallePedido()">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- USUARIOS -->
+        <section id="seccion-usuarios" class="seccion-contenido" style="display: none;">
+          <div class="tabla-contenedor">
+            <div class="tabla-encabezado">
+              <h2>Gestión de Usuarios</h2>
+            </div>
+
+            <table class="admin-tabla">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Tipo de Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-usuarios-body">
+                <!-- Se llenará con JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CATEGORÍAS -->
+        <section id="seccion-categorias" class="seccion-contenido" style="display: none;">
+          <div class="tabla-contenedor">
+            <div class="tabla-encabezado">
+              <h2>Productos por Categoría</h2>
+            </div>
+            <div id="categorias-lista">
+              <!-- Aquí se mostrarán los productos agrupados por categoría -->
+            </div>
+          </div>
+        </section>
+
+        <!-- REPORTES -->
+        <section id="seccion-reportes" class="seccion-contenido" style="display: none;">
+          <h2>Reportes</h2>
+          <div class="graficos-container">
+            <div class="grafico-card">
+              <h3>Ventas por Mes</h3>
+              <canvas id="grafico-ventas-mes"></canvas>
+            </div>
+
+            <div class="grafico-card">
+              <h3>Productos por Categoría</h3>
+              <canvas id="grafico-categorias"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONFIGURACIÓN -->
+        <section id="seccion-configuracion" class="seccion-contenido" style="display: none;">
+          <div class="tabla-contenedor">
+            <h2>Configuración del Sistema</h2>
+
+            <div class="grupo-formulario">
+              <label>Nombre de la Tienda</label>
+              <input type="text" value="Inventory" placeholder="Nombre de la tienda">
+            </div>
+
+            <div class="grupo-formulario">
+              <label>Email de Contacto</label>
+              <input type="email" value="info@inventory.com" placeholder="Email">
+            </div>
+
+            <div class="grupo-formulario">
+              <label>Teléfono</label>
+              <input type="tel" value="+506 2345-6789" placeholder="Teléfono">
+            </div>
+
+            <div class="grupo-formulario">
+              <label>Dirección</label>
+              <textarea placeholder="Dirección completa">San José, Costa Rica</textarea>
+            </div>
+
+            <button class="btn btn-principal" onclick="guardarConfiguracion()">Guardar Cambios</button>
+
+            <hr style="margin: 1.5rem 0;">
+
+            <h3>Cuenta Admin</h3>
+            <div class="grupo-formulario">
+              <label>Correo Admin</label>
+              <input type="email" id="admin-email" readonly>
+            </div>
+
+            <div class="grupo-formulario">
+              <label>Contraseña Actual</label>
+              <input type="password" id="admin-current-password" placeholder="Contraseña actual">
+            </div>
+
+            <div class="grupo-formulario">
+              <label>Nueva Contraseña</label>
+              <input type="password" id="admin-new-password" placeholder="Nueva contraseña">
+            </div>
+
+            <div class="grupo-formulario">
+              <label>Confirmar Nueva Contraseña</label>
+              <input type="password" id="admin-confirm-password" placeholder="Confirmar nueva contraseña">
+            </div>
+
+            <button class="btn btn-principal" id="btn-change-admin-pass">Cambiar Contraseña</button>
+            <div id="admin-pass-msg" class="mensaje" style="margin-top:0.75rem;"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PRODUCTO -->
+  <div class="modal" id="modal-producto">
+    <div class="modal-contenido">
+      <button class="modal-cerrar" onclick="cerrarModalProducto()">✕</button>
+      <h2>Agregar Producto</h2>
+
+      <form id="form-producto">
+        <div class="grupo-formulario">
+          <label for="prod-nombre">Nombre del Producto</label>
+          <input type="text" id="prod-nombre" required>
+        </div>
+
+        <div class="grupo-formulario-doble">
+          <div class="grupo-formulario">
+            <label for="prod-categoria">Categoría</label>
+            <select id="prod-categoria" required>
+              <option value="">Seleccionar categoría</option>
+              <option value="bebidas">Bebidas</option>
+              <option value="snacks">Snacks</option>
+              <option value="limpieza">Limpieza</option>
+              <option value="higiene">Higiene</option>
+            </select>
+          </div>
+
+          <div class="grupo-formulario">
+            <label for="prod-precio">Precio ($)</label>
+            <input type="number" id="prod-precio" step="0.01" required>
+          </div>
+        </div>
+
+        <div class="grupo-formulario-doble">
+          <div class="grupo-formulario">
+            <label for="prod-stock">Stock</label>
+            <input type="number" id="prod-stock" required>
+          </div>
+
+          <div class="grupo-formulario">
+            <label for="prod-imagen">URL de Imagen</label>
+            <input type="text" id="prod-imagen" placeholder="https://...">
+          </div>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="prod-descripcion">Descripción</label>
+          <textarea id="prod-descripcion"></textarea>
+        </div>
+
+        <div class="modal-botones">
+          <button type="button" class="btn btn-secundario" onclick="cerrarModalProducto()">Cancelar</button>
+          <button type="submit" class="btn btn-principal">Guardar Producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/admin.js"></script>
+  <script>
+    // Inicializar campos de cuenta admin en la sección de configuración
+    async function initAdminAccountSection() {
+      const creds = await getAdminCredenciales();
+      if (creds && creds.email) document.getElementById('admin-email').value = creds.email;
+
+      document.getElementById('btn-change-admin-pass').addEventListener('click', async function() {
+        const current = document.getElementById('admin-current-password').value || '';
+        const nw = document.getElementById('admin-new-password').value || '';
+        const conf = document.getElementById('admin-confirm-password').value || '';
+        const msg = document.getElementById('admin-pass-msg');
+        msg.textContent = '';
+
+        if (!current || !nw || !conf) { msg.textContent = 'Por favor completa todos los campos.'; msg.className='mensaje mensaje-error'; return; }
+        if (nw !== conf) { msg.textContent = 'Las contraseñas nuevas no coinciden.'; msg.className='mensaje mensaje-error'; return; }
+
+        const active = await getAdminCredenciales();
+        if (!active) { msg.textContent = 'Error leyendo credenciales.'; msg.className='mensaje mensaje-error'; return; }
+
+        if (current !== active.password) { msg.textContent = 'Contraseña actual incorrecta.'; msg.className='mensaje mensaje-error'; return; }
+
+        const ok = await actualizarPasswordAdmin(nw);
+        if (ok) {
+          msg.textContent = '✓ Contraseña actualizada correctamente.'; msg.className='mensaje mensaje-exito';
+          // limpiar inputs
+          document.getElementById('admin-current-password').value = '';
+          document.getElementById('admin-new-password').value = '';
+          document.getElementById('admin-confirm-password').value = '';
+        } else {
+          msg.textContent = 'Error al actualizar la contraseña.'; msg.className='mensaje mensaje-error';
+        }
+      });
+    }
+
+    // Ejecutar al cargar el admin
+    document.addEventListener('DOMContentLoaded', function() {
+      initAdminAccountSection();
+    });
+  </script>
+  <script>
+    window.BACKEND_URL = 'http://localhost:3000';
+  </script>
+</body>
+</html>

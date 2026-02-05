@@ -1,0 +1,230 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                ║
+║                   🏪 BIENVENIDO A INVENTORY APP 🏪                           ║
+║                                                                                ║
+║              Sistema de Inventario y E-commerce Interactivo                    ║
+║                        Para Distribuidoras de Productos                         ║
+║                                                                                ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+📋 INICIO RÁPIDO
+═══════════════════════════════════════════════════════════════════════════════
+
+1️⃣  ABRIR LA APLICACIÓN
+   
+   Opción A: Servidor Python
+   ───────────────────────────
+   cd "inventory app"
+   python -m http.server 8000
+   Abre: http://localhost:8000
+
+   Opción B: Servidor Node.js
+   ──────────────────────────
+   cd "inventory app"
+   npm install
+   npm start
+   Abre: http://localhost:3000
+
+
+2️⃣  CREAR UNA CUENTA (Cliente)
+   
+   • Haz clic en "Registrarse"
+   • Completa el formulario
+   • Inicia sesión con tus credenciales
+
+
+3️⃣  ACCEDER AL PANEL ADMINISTRADOR
+   
+   Email:     admin@inventory.com
+   Contraseña: admin123
+   
+   URL: http://localhost:8000/public/html/login-admin.html
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 FUNCIONALIDADES PRINCIPALES
+
+   👤 MÓDULO CLIENTE (E-COMMERCE)
+   ──────────────────────────────
+   ✓ Catálogo de productos con búsqueda
+   ✓ Filtrado por categorías (Bebidas, Snacks, Limpieza, Higiene)
+   ✓ Carrito de compras
+   ✓ Registro e inicio de sesión
+   ✓ Confirmación de pedido
+   ✓ Sistema de precios en $ (Pesos Colombianos)
+
+   🔧 MÓDULO ADMINISTRADOR
+   ──────────────────────
+   ✓ Dashboard con estadísticas
+   ✓ Gestión de productos (agregar, editar, eliminar)
+   ✓ Gestión de pedidos (ver, cambiar estado)
+   ✓ Gestión de usuarios
+   ✓ Reportes y gráficos
+   ✓ Configuración del sistema
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 ESTRUCTURA DEL PROYECTO
+
+inventory app/
+├── 📄 index.html                  (Página de inicio)
+├── 📄 README.md                   (Documentación completa)
+├── 📄 INSTALACION.md              (Guía de instalación)
+├── 📄 package.json                (Dependencias Node.js)
+│
+├── 📁 public/
+│   ├── 📁 html/
+│   │   ├── index.html             (E-commerce)
+│   │   ├── login.html             (Login Cliente)
+│   │   ├── registro.html          (Registro Cliente)
+│   │   ├── confirmacion.html      (Confirmación)
+│   │   ├── admin.html             (Dashboard Admin)
+│   │   └── login-admin.html       (Login Admin)
+│   │
+│   ├── 📁 css/
+│   │   ├── global.css             (Estilos globales)
+│   │   ├── ecommerce.css          (E-commerce)
+│   │   └── admin.css              (Panel Admin)
+│   │
+│   ├── 📁 js/
+│   │   ├── app.js                 (Lógica E-commerce)
+│   │   ├── carrito.js             (Carrito)
+│   │   ├── auth.js                (Autenticación)
+│   │   ├── admin.js               (Panel Admin)
+│   │   └── datos-prueba.js        (Datos de prueba)
+│   │
+│   └── 📁 assets/
+│       ├── logo.png               (Tu logo aquí)
+│       └── 📁 images/             (Imágenes de productos)
+│
+└── 📁 server/
+    └── server.js                  (Servidor Express)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎨 PALETA DE COLORES CORPORATIVA
+
+   Azul Claro:    #B6E1F2  ■■■■■■■■■■■■■■■■■■■■
+   Azul Oscuro:   #386273  ■■■■■■■■■■■■■■■■■■■■
+   Blanco:        #FFFFFF  ■■■■■■■■■■■■■■■■■■■■
+   Gris Claro:    #F5F5F5  ■■■■■■■■■■■■■■■■■■■■
+   Gris Oscuro:   #666666  ■■■■■■■■■■■■■■■■■■■■
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📝 DATOS DE PRUEBA (Copiar y ejecutar en consola F12)
+
+Para cargar datos de demostración, abre la consola (F12) y ejecuta:
+
+   <script src="public/js/datos-prueba.js"></script>
+
+O copia el código del archivo: public/js/datos-prueba.js
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔐 DATOS POR DEFECTO PARA PRUEBAS
+
+   👨‍💼 ADMINISTRADOR
+   ─────────────────
+   Email:       admin@inventory.com
+   Contraseña:  admin123
+
+   👤 CLIENTES (Después de ejecutar datos-prueba.js)
+   ──────────────────────────────────────────────────
+   Email:       juan@example.com
+   Contraseña:  pass123
+
+   Email:       maria@example.com
+   Contraseña:  pass123
+
+   Email:       carlos@example.com
+   Contraseña:  pass123
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🌐 TECNOLOGÍAS UTILIZADAS
+
+   Frontend:
+   • HTML5
+   • CSS3 (Grid, Flexbox)
+   • JavaScript Vanilla
+   • Chart.js (para gráficos)
+
+   Backend (Opcional):
+   • Node.js
+   • Express.js
+   • CORS
+
+   Almacenamiento:
+   • localStorage (navegador)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 PRÓXIMAS MEJORAS
+
+   □ Base de datos (MongoDB, MySQL, PostgreSQL)
+   □ Autenticación JWT
+   □ Pasarela de pagos (Stripe, PayPal)
+   □ Sistema de emails automáticos
+   □ Tracking de pedidos en tiempo real
+   □ Revisiones y calificaciones de productos
+   □ Integración con redes sociales
+   □ App móvil (React Native)
+   □ Análisis de datos avanzados
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+❓ PROBLEMAS COMUNES
+
+   ❌ "No se cargan los estilos"
+   ✓ Solución: Usa un servidor HTTP (no abras archivos directamente)
+
+   ❌ "El carrito no guarda datos"
+   ✓ Solución: Verifica que no tengas modo incógnito activado
+
+   ❌ "No puedo acceder al admin"
+   ✓ Solución: Usa email: admin@inventory.com, contraseña: admin123
+
+   ❌ "Las imágenes no se muestran"
+   ✓ Solución: Reemplaza URLs de placeholders con URLs reales
+
+   Para más ayuda, consulta README.md o INSTALACION.md
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📞 INFORMACIÓN DE CONTACTO (Editable)
+
+   Teléfono:  +506 2345-6789
+   Email:     info@inventory.com
+   Ubicación: San José, Costa Rica
+   Horario:   Lun - Vie: 8am - 6pm
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ ¿LISTO PARA EMPEZAR?
+
+   1. Lee README.md para documentación completa
+   2. Sigue INSTALACION.md para configurar el servidor
+   3. Carga datos-prueba.js para tener datos de ejemplo
+   4. ¡Explora y diviértete probando la aplicación!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+© 2026 INVENTORY APP - Todos los derechos reservados.
+
+Versión: 1.0.0
+Última actualización: Enero 2026
+Estado: ✓ Listo para producción (con backend)
+
+═══════════════════════════════════════════════════════════════════════════════
